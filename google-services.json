@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "708204141988",
+    "firebase_url": "https://ionic-fire-d0834.firebaseio.com",
+    "project_id": "ionic-fire-d0834",
+    "storage_bucket": "ionic-fire-d0834.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708204141988:android:c16daed2c578daea",
+        "android_client_info": {
+          "package_name": "com.tomcatbuzz.ionfire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708204141988-q6qck50okem05ug5k46f7bjqqarmscpo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8tIgrIFq6DUkDgrflUQfPajTFPZQeWls"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
