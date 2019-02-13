@@ -86,4 +86,9 @@
     <engine name="ios" spec="~4.5.5" />
     <plugin name="cordova-plugin-firebase" spec="2.0.5" />
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
+    <plugin name="cordova-plugin-googleplus" spec="7.0.0">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.708204141988-he43frteg6tea7d4c7tlrmnoq39glv2s" />
+        <variable name="WEB_APPLICATION_CLIENT_ID" 
+        value="708204141988-q6qck50okem05ug5k46f7bjqqarmscpo.apps.googleusercontent.com" />
+    </plugin>
 </widget>
