@@ -9,7 +9,7 @@ import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { LoadingController } from '@ionic/angular';
-// import '../models/user.model';
+import '../models/user.model';
 
 
 @Injectable({
@@ -47,7 +47,13 @@ export class AuthService {
     const credential = await this.afAuth.auth.signInAnonymously();
     return await this.updateUserData(credential.user);
   }
-
+  /**
+   * @param  {} {uid
+   * @param  {} email
+   * @param  {} displayName
+   * @param  {} photoURL
+   * @param  {} isAnonymous}
+   */
   private updateUserData({ uid, email, displayName, photoURL, isAnonymous }) {
     const path = `users/${uid}`;
 

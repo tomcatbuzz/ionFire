@@ -6,4 +6,17 @@
 
 <ion-content padding>
 
+  <ion-list>
+
+    <ion-item *ngFor="let todo of todos | async;">
+      <ion-label>
+        <span [class.complete]="todo.status === 'complete'"></span>
+      </ion-label>
+
+      <ion-checkbox (click)="toggleStatus(todo)" [checked]="todo.status === 'complete'"></ion-checkbox>
+
+    </ion-item>
+
+  </ion-list>
+
 </ion-content>
