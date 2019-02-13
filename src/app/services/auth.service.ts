@@ -9,8 +9,6 @@ import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { LoadingController } from '@ionic/angular';
-import '../models/user.model';
-
 
 @Injectable({
   providedIn: 'root'

@@ -6,6 +6,19 @@
 
 <ion-content padding>
 
+  <ion-segment (ionChange)="updateFilter($event.detail.value)">
+    <ion-segment-button value="" checked>
+      ALL
+    </ion-segment-button>
+    <ion-segment-button value="complete">
+      Complete
+    </ion-segment-button>
+    <ion-segment-button value="pending">
+      Pending
+    </ion-segment-button>
+
+  </ion-segment>
+
   <ion-list>
 
     <ion-item *ngFor="let todo of todos | async;">
@@ -14,6 +27,14 @@
       </ion-label>
 
       <ion-checkbox (click)="toggleStatus(todo)" [checked]="todo.status === 'complete'"></ion-checkbox>
+
+      <ion-button [href]="'todo/'" + todo.id>
+        <ion-icon name="eye"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="presentTodoForm(todo)">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
 
     </ion-item>
 

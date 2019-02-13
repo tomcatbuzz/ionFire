@@ -8,7 +8,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class AuthGuard implements CanActivate {
   constructor(
-    private auth: AuthService, 
+    private auth: AuthService,
     private alertController: AlertController
   ) {}
 
@@ -28,6 +28,7 @@ export class AuthGuard implements CanActivate {
         });
 
         await alert.present();
+
       }
 
       return isLoggedIn;

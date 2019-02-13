@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, map, shareReplay } from 'rxjs/operators';
 import { DbService } from '../services/db.service';
@@ -13,6 +13,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class TodoPage implements OnInit {
   todos;
+  filtered;
+
+  filter = new BehaviorSubject(null);
 
   constructor(
     public db: DbService,
@@ -32,10 +35,16 @@ export class TodoPage implements OnInit {
       ),
       shareReplay(1)
     );
-  }
 
-  trackbyId(idx, todo) {
-    return todo.id;
+    this.filtered = this.filter.pipe(
+      switchMap(filter => {
+        return this.todos.pipe(
+          map(arr =>
+            obj => (status ? obj.status === status : true)
+          )
+        );
+      })
+    );
   }
 
   deleteTodo(todo) {
@@ -45,6 +54,22 @@ export class TodoPage implements OnInit {
   toggleStatus(todo) {
     const status = todo.status === 'complete' ? 'pending' : 'complete';
       this.db.updateAt(`todos/${todo.id}`, { status });
+  }
+
+  updateFilter(val) {
+    this.filter.next(val);
+  }
+
+  async presentTodoForm(todo?: any) {
+    const modal = await this.modal.create({
+      component: TodoFormComponent,
+      componentProps: { todo }
+    });
+    return await modal.present();
+  }
+
+  trackbyId(idx, todo) {
+    return todo.id;
   }
 
 }

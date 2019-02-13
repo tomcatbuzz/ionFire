@@ -4,9 +4,8 @@ import { TutorialGuard } from './guards/tutorial.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: 'home',
+    path: '',
     loadChildren: './home/home.module#HomePageModule',
     canActivate: [TutorialGuard]
   },
@@ -15,10 +14,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'tutorial', loadChildren: './tutorial/tutorial.module#TutorialPageModule' },
+  { path: 'fcm', loadChildren: './fcm/fcm.module#FcmPageModule' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
+  // imports: [RouterModule.forRoot(routes, { useHash: true })], This is used for Netlify
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
