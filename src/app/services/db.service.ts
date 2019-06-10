@@ -1,4 +1,4 @@
-import { Injectable, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/';

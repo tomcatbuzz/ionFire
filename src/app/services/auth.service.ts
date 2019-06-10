@@ -9,6 +9,8 @@ import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { LoadingController } from '@ionic/angular';
+import { NotifyService } from './notify.service';
+import { AuthData } from './auth-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,8 @@ export class AuthService {
     private storage: Storage,
     private platform: Platform,
     private gplus: GooglePlus,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private notify: NotifyService
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => (user ? db.doc$(`users/${user.uid}`) : of(null)))
@@ -45,13 +48,8 @@ export class AuthService {
     const credential = await this.afAuth.auth.signInAnonymously();
     return await this.updateUserData(credential.user);
   }
-  /**
-   * @param  {} {uid
-   * @param  {} email
-   * @param  {} displayName
-   * @param  {} photoURL
-   * @param  {} isAnonymous}
-   */
+
+
   private updateUserData({ uid, email, displayName, photoURL, isAnonymous }) {
     const path = `users/${uid}`;
 
@@ -74,6 +72,47 @@ export class AuthService {
   //   }
   // }
 
+  //// Email/Password Auth ////
+  // async normalLogin() {
+  //   const credential = await this.afAuth.auth.signInWithEmailAndPassword();
+  //   return await this.updateUserData(credential.user)
+  // }
+
+  async emailSignup(authData: AuthData) {
+    const credential = await this.afAuth.auth.createUserWithEmailAndPassword(authData.email,
+      authData.password);
+      return await this.updateUserData(credential.user)
+        .then(() => {
+          this.notify.presentToast('Welcome new user!', 3000);
+        })
+        .catch(error => this.handleError(error));
+  }
+
+  async emailLogin(authData: AuthData) {
+    const credential = await this.afAuth.auth.signInWithEmailAndPassword(authData.email,
+      authData.password);
+    return await this.updateUserData(credential.user)
+      .then(() => {
+        this.notify.presentToast('Welcome back!', 3000);
+      })
+      .catch(error => this.handleError(error));
+  }
+
+  // Sends email allowing user to reset password
+  resetPassword(email: string) {
+    const fbAuth = auth();
+
+    return fbAuth
+      .sendPasswordResetEmail(email)
+      .then(() => this.notify.presentToast('Password update email sent', 3000))
+      .catch(error => this.handleError(error));
+  }
+
+  // If error, console log and notify user
+  private handleError(error: Error) {
+    console.error(error);
+    this.notify.presentToast(error.message, 3000);
+  }
   // Google Auth
 
   setRedirect(val) {
@@ -123,16 +162,20 @@ export class AuthService {
     return result;
   }
 
-  // async webGoogleLogin(): Promise<any> {
-  //   try {
-  //     const provider = new auth.GoogleAuthProvider();
-  //     const credential = await this.afAuth.auth.signInWithPopup(provider);
+  async webGoogleLogin(): Promise<any> {
+    try {
+      const provider = new auth.GoogleAuthProvider();
+      const credential = await this.afAuth.auth.signInWithPopup(provider);
+      if (credential.user) {
+        await this.updateUserData(credential.user);
+      }
+      return credential;
 
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
+    } catch (err) {
+      console.log(err);
+    }
 
-  // }
+  }
 
   async nativeGoogleLogin(): Promise<any> {
     const gplusUser = await this.gplus.login({

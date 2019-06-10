@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, map, shareReplay } from 'rxjs/operators';
 import { DbService } from '../services/db.service';
@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './todo.page.html',
   styleUrls: ['./todo.page.scss'],
 })
+
 export class TodoPage implements OnInit {
   todos;
   filtered;

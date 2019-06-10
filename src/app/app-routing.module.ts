@@ -15,6 +15,8 @@ const routes: Routes = [
   },
   { path: 'tutorial', loadChildren: './tutorial/tutorial.module#TutorialPageModule' },
   { path: 'fcm', loadChildren: './fcm/fcm.module#FcmPageModule' },
+  // { path: 'login', loadChildren: './login/login.module#LoginModule' },
+  // { path: 'signup', loadChildren: './signup/signup.module#SignupModule' },
 ];
 
 @NgModule({
